@@ -1,4 +1,4 @@
-console.log("Main.js loaded")
+console.log("Main.js loaded");
 
 let clicks = 0;
 let isZoomed = false;
@@ -7,6 +7,16 @@ let points = 0;
 function add() {
     clicks++;
     document.getElementById("clickcount").innerHTML = "Cookies: " + clicks;
+
+    // Create and animate number element
+    const number = document.createElement("div");
+    number.classList.add("number");
+    number.textContent = "+1";
+    document.body.appendChild(number);
+
+    setTimeout(() => {
+        number.remove();
+    }, 1500);
 
     // Increase points
     points++;
@@ -17,8 +27,13 @@ function add() {
     isZoomed = !isZoomed;
     const cookieImg = document.getElementById("cookieImg");
     if (isZoomed) {
+        // Add zoom class and remove it after a short delay
         cookieImg.classList.add("zoom");
+        setTimeout(() => {
+            cookieImg.classList.remove("zoom");
+        }, 300); // Adjust duration as needed
     } else {
+        // Remove zoom class
         cookieImg.classList.remove("zoom");
         // Trigger animation on unzoom
         cookieImg.classList.add("shake");
@@ -28,6 +43,8 @@ function add() {
         }, 1000); // Adjust duration as needed
     }
 }
+
+
 
 function showPointsPopup() {
     const cookieImg = document.getElementById("cookieImg");

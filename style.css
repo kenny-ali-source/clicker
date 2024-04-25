@@ -70,3 +70,25 @@ p {
     transform: scale(1.2);
     /* Change this value for the level of zoom */
 }
+/* Add your CSS styles here */
+.number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: riseAndFade 1.5s ease forwards;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+@keyframes riseAndFade {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+}
