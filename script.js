@@ -17,15 +17,15 @@ function cookieClick() {
         cookies += 1;
     }
 
-    if (upgradeLevel === "Factory Level") {
+    if (upgradeLevel === "Farm Level") {
         cookies += 9;
     }
 
-    if (upgradeLevel === "Plant Level") {
+    if (upgradeLevel === "Mine Level") {
         cookies += 29;
     }
 
-    if (upgradeLevel === "Super-Plant Level") {
+    if (upgradeLevel === "Factory Level") {
         cookies += 99;
     }
 
@@ -38,13 +38,13 @@ function cookieClick() {
         document.getElementById('shop').rows[1].cells[3].innerHTML = '<button onclick="buyUpgrade(\'granny\', 30)">Buy</button>';
     }
     if (cookies >= 150) {
-        document.getElementById('shop').rows[2].cells[3].innerHTML = '<button onclick="buyUpgrade(\'factory\', 150)">Buy</button>';
+        document.getElementById('shop').rows[2].cells[3].innerHTML = '<button onclick="buyUpgrade(\'farm\', 150)">Buy</button>';
     }
     if (cookies >= 500) {
-        document.getElementById('shop').rows[3].cells[3].innerHTML = '<button onclick="buyUpgrade(\'plant\', 500)">Buy</button>';
+        document.getElementById('shop').rows[3].cells[3].innerHTML = '<button onclick="buyUpgrade(\'mine\', 500)">Buy</button>';
     }
     if (cookies >= 1000) {
-        document.getElementById('shop').rows[4].cells[3].innerHTML = '<button onclick="buyUpgrade(\'superPlant\', 1000)">Buy</button>';
+        document.getElementById('shop').rows[4].cells[3].innerHTML = '<button onclick="buyUpgrade(\'factory\', 1000)">Buy</button>';
     }
 }
 
@@ -59,17 +59,17 @@ function buyUpgrade(upgrade, cost) {
                 num *= 2;
                 upgradeLevel = "Granny Level";
                 break;
-            case 'factory':
+            case 'farm':
                 num *= 10;
-                upgradeLevel = "Factory Level";
+                upgradeLevel = "Farm Level";
                 break;
-            case 'plant':
+            case 'mine':
                 num *= 30;
-                upgradeLevel = "Plant Level";
+                upgradeLevel = "Mine Level";
                 break;
-            case 'superPlant':
+            case 'factory':
                 num *= 100;
-                upgradeLevel = "Super-Plant Level";
+                upgradeLevel = "Factory Level";
                 break;
             default:
                 break;
@@ -89,11 +89,11 @@ function upgradeIndex(upgrade) {
     switch (upgrade) {
         case 'granny':
             return 1;
-        case 'factory':
+        case 'farm':
             return 2;
-        case 'plant':
+        case 'mine':
             return 3;
-        case 'superPlant':
+        case 'factory':
             return 4;
         default:
             return -1;
