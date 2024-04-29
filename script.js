@@ -1,50 +1,98 @@
-console.log("Main.js loaded")
+var num = 0;
+var cookies = 0;
+var upgradeLevel = '';
 
-let clicks = 0;
-let isZoomed = false;
-let points = 0;
+window.onload = function () {
+    var name = prompt("What is your name?");
+    var space = document.getElementById("space");
+    space.innerHTML = name;
+}
+function cookieClick() {
+    num += 1;
+    cookies += 1;
 
-function add() {
-    clicks++;
-    document.getElementById("clickcount").innerHTML = "Cookies: " + clicks;
+    if (upgradeLevel === "Granny Level") {
+        cookies += 1;
+    }
+    if (upgradeLevel === "Farm Level") {
+        cookies += 9;
+    }
 
-    // Increase points
-    points++;
-    // Show points popup
-    showPointsPopup();
+    if (upgradeLevel === "Mine Level") {
+        cookies += 29;
+    }
 
-    // Toggle the zoom class
-    isZoomed = !isZoomed;
-    const cookieImg = document.getElementById("cookieImg");
-    if (isZoomed) {
-        cookieImg.classList.add("zoom");
-    } else {
-        cookieImg.classList.remove("zoom");
-        // Trigger animation on unzoom
-        cookieImg.classList.add("shake");
-        // Remove animation after some time
-        setTimeout(() => {
-            cookieImg.classList.remove("shake");
-        }, 1000); // Adjust duration as needed
+    if (upgradeLevel === "Factory Level") {
+        cookies += 99;
+    }
+
+    var numbers = document.getElementById("numbers");
+    numbers.innerHTML = cookies;
+
+    // Check if upgrades are affordable
+    if (cookies >= 30) {
+        document.getElementById('shop').rows[1].cells[3].innerHTML = '<button onclick="buyUpgrade(\'granny\', 30)">Buy</button>';
+    }
+    if (cookies >= 500) {
+        document.getElementById('shop').rows[2].cells[3].innerHTML = '<button onclick="buyUpgrade(\'farm\', 150)">Buy</button>';
+    }
+    if (cookies >= 1000) {
+        document.getElementById('shop').rows[3].cells[3].innerHTML = '<button onclick="buyUpgrade(\'mine\', 500)">Buy</button>';
+    }
+    if (cookies >= 100000) {
+        document.getElementById('shop').rows[4].cells[3].innerHTML = '<button onclick="buyUpgrade(\'factory\', 1000)">Buy</button>';
     }
 }
 
-function showPointsPopup() {
-    const cookieImg = document.getElementById("cookieImg");
-    const pointPopup = document.createElement("div");
-    pointPopup.classList.add("popup");
-    pointPopup.textContent = "+1"; // Display points earned
+function buyUpgrade(upgrade, cost) {
+    if (cookies >= cost) {
+        cookies -= cost;
+        var numbers = document.getElementById("numbers");
+        numbers.innerHTML = cookies;
 
-    // Position the popup relative to the image
-    const imgRect = cookieImg.getBoundingClientRect();
-    pointPopup.style.left = imgRect.left + (imgRect.width / 2) + "px";
-    pointPopup.style.top = imgRect.top - 20 + "px";
+        switch (upgrade) {
+            case 'granny':
+                num *= 2;
+                upgradeLevel = "Granny Level";
+                break;
+            case 'farm':
+                num *= 10;
+                upgradeLevel = "Farm Level";
+                break;
+            case 'mine':
+                num *= 30;
+                upgradeLevel = "Mine Level";
+                break;
+            case 'factory':
+                num *= 1000;
+                upgradeLevel = "Factory Level";
+                break;
+            default:
+                break;
+        }
 
-    document.body.appendChild(pointPopup);
+        var upgradeDisplay = document.getElementById("upgradeLevel");
+        upgradeDisplay.innerHTML = upgradeLevel;
 
-    // Hide the popup after some time
-    setTimeout(() => {
-        pointPopup.remove();
-    }, 1000); // Adjust duration as needed
+        // Disable the button after purchase
+        document.getElementById('shop').rows[upgradeIndex(upgrade)].cells[3].innerHTML = 'Bought';
+    } else {
+        alert("Not enough cookies!");
+    }
+}
+
+function upgradeIndex(upgrade) {
+    switch (upgrade) {
+        case 'granny':
+            return 1;
+        case 'farm':
+            return 2;
+        case 'mine':
+            return 3;
+        case 'factory':
+            return 4;
+        default:
+            return -1;
+    }
 }
 
