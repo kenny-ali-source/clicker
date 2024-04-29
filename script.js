@@ -1,104 +1,50 @@
-var num = 0;
-var cookies = 0;
-var upgradeLevel = '';
+console.log("Main.js loaded")
 
-window.onload = function () {
-    var name = prompt("What is your name?");
-    var space = document.getElementById("space");
-    space.innerHTML = name;
-}
+let clicks = 0;
+let isZoomed = false;
+let points = 0;
 
-function cookieClick() {
-    num += 1;
-    cookies += 1;
+function add() {
+    clicks++;
+    document.getElementById("clickcount").innerHTML = "Cookies: " + clicks;
 
+    // Increase points
+    points++;
+    // Show points popup
+    showPointsPopup();
 
-    if (upgradeLevel === "Granny Level") {
-        cookies += 1;
-    }
-
-    if (upgradeLevel === "Farm Level") {
-        cookies += 9;
-    }
-
-    if (upgradeLevel === "Mine Level") {
-        cookies += 29;
-    }
-
-    if (upgradeLevel === "Factory Level") {
-        cookies += 99;
-    }
-
-
-    var numbers = document.getElementById("numbers");
-    numbers.innerHTML = cookies;
-
-
-    if (cookies >= 30) {
-        document.getElementById('shop').rows[1].cells[3].innerHTML = '<button onclick="buyUpgrade(\'granny\', 30)">Buy</button>';
-    }
-    if (cookies >= 150) {
-        document.getElementById('shop').rows[2].cells[3].innerHTML = '<button onclick="buyUpgrade(\'farm\', 150)">Buy</button>';
-    }
-    if (cookies >= 500) {
-        document.getElementById('shop').rows[3].cells[3].innerHTML = '<button onclick="buyUpgrade(\'mine\', 500)">Buy</button>';
-    }
-    if (cookies >= 1000) {
-        document.getElementById('shop').rows[4].cells[3].innerHTML = '<button onclick="buyUpgrade(\'factory\', 1000)">Buy</button>';
-    }
-}
-
-function buyUpgrade(upgrade, cost) {
-    if (cookies >= cost) {
-        cookies -= cost;
-        var numbers = document.getElementById("numbers");
-        numbers.innerHTML = cookies;
-
-        switch (upgrade) {
-            case 'granny':
-                num *= 2;
-                upgradeLevel = "Granny Level";
-                break;
-            case 'farm':
-                num *= 10;
-                upgradeLevel = "Farm Level";
-                break;
-            case 'mine':
-                num *= 30;
-                upgradeLevel = "Mine Level";
-                break;
-            case 'factory':
-                num *= 100;
-                upgradeLevel = "Factory Level";
-                break;
-            default:
-                break;
-        }
-
-        var upgradeDisplay = document.getElementById("upgradeLevel");
-        upgradeDisplay.innerHTML = upgradeLevel;
-
-
-        document.getElementById('shop').rows[upgradeIndex(upgrade)].cells[3].innerHTML = 'Bought';
+    // Toggle the zoom class
+    isZoomed = !isZoomed;
+    const cookieImg = document.getElementById("cookieImg");
+    if (isZoomed) {
+        cookieImg.classList.add("zoom");
     } else {
-        alert("Not enough cookies!");
+        cookieImg.classList.remove("zoom");
+        // Trigger animation on unzoom
+        cookieImg.classList.add("shake");
+        // Remove animation after some time
+        setTimeout(() => {
+            cookieImg.classList.remove("shake");
+        }, 1000); // Adjust duration as needed
     }
 }
 
-function upgradeIndex(upgrade) {
-    switch (upgrade) {
-        case 'granny':
-            return 1;
-        case 'farm':
-            return 2;
-        case 'mine':
-            return 3;
-        case 'factory':
-            return 4;
-        default:
-            return -1;
-    }
+function showPointsPopup() {
+    const cookieImg = document.getElementById("cookieImg");
+    const pointPopup = document.createElement("div");
+    pointPopup.classList.add("popup");
+    pointPopup.textContent = "+1"; // Display points earned
+
+    // Position the popup relative to the image
+    const imgRect = cookieImg.getBoundingClientRect();
+    pointPopup.style.left = imgRect.left + (imgRect.width / 2) + "px";
+    pointPopup.style.top = imgRect.top - 20 + "px";
+
+    document.body.appendChild(pointPopup);
+
+    // Hide the popup after some time
+    setTimeout(() => {
+        pointPopup.remove();
+    }, 1000); // Adjust duration as needed
 }
-
-
 

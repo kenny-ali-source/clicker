@@ -83,3 +83,7 @@ body {
     justify-content: center;
 }
 
+.zoom {
+    transform: scale(1.2);
+    /* Change this value for the level of zoom */
+}
